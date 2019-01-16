@@ -29,8 +29,6 @@ namespace MarkovChainApp.Readers
         Console.WriteLine(ex.Message);
       }
 
-
-      Console.WriteLine("I read a file");
       return returnStrings;
     }
   }

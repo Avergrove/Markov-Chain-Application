@@ -80,16 +80,7 @@ namespace MarkovChainApp
     {
 
       string returnText = string.Empty;
-      string curr = GetRandomKey();
-
-      /*
-      for (int i = 0; i < 100; i++)
-      {
-        returnText = string.Concat(returnText, curr, " ");
-        curr = GetNextToValue(curr);
-      }
-      */
-
+      string curr = GetStarterKey();
 
       bool textGenerated = false;
       int currentSentenceLength = 0;
@@ -115,6 +106,17 @@ namespace MarkovChainApp
     {
       this.minimumSentenceLength = length;
       return this;
+    }
+
+    private bool IsSentenceStarter(String s)
+    {
+      Regex startsWithCapital = new Regex(@"^[A-Z]");
+      if (startsWithCapital.IsMatch(s))
+      {
+        return true;
+      }
+
+      return false;
     }
 
     private bool IsSentenceEnder(String s)
@@ -143,6 +145,31 @@ namespace MarkovChainApp
     }
 
     /// <summary>
+    /// Retrieves a key that starts a sentence.
+    /// </summary>
+    /// <returns>Key that starts a sentence</returns>
+    private String GetStarterKey()
+    {
+
+      var rand = new Random();
+      List<string> values = Nodes.Select(x => x.Key).ToList();
+
+      bool isStarterKeyFound = false;
+      String selectedString = null;
+
+      while (!isStarterKeyFound)
+      {
+        selectedString = values[rand.Next(0, values.Count)];
+        if (IsSentenceStarter(selectedString))
+        {
+          isStarterKeyFound = true;
+        }
+      }
+
+      return selectedString;
+    }
+
+    /// <summary>
     /// Retrieves a random key from the Markov Chain dictionary
     /// </summary>
     /// <returns></returns>
@@ -155,6 +182,11 @@ namespace MarkovChainApp
       return values[rand.Next(0, size)];
     }
 
+    /// <summary>
+    /// Retrieves the next key based on a provided key
+    /// </summary>
+    /// <param name="key">The key to check on</param>
+    /// <returns></returns>
     private string GetNextToValue(string key)
     {
       var toEdges = Edges.Where(x => x.From == key);
