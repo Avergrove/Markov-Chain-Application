@@ -8,6 +8,6 @@ namespace MarkovChainApp.Readers
 {
   public interface IReader
   {
-    List<string> Read(string inputUrl);
+    List<string> Read(string argument);
   }
 }

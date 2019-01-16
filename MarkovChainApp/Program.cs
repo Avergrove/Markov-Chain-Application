@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using MarkovChainApp.Readers;
 
 namespace MarkovChainApp
@@ -12,31 +7,28 @@ namespace MarkovChainApp
   {
     static void Main(string[] args)
     {
-      Console.WriteLine("Welcome to the Markov Chain app!");
+      MarkovChain chain = InitializeMarkovChain();
+      RunApplication(chain);
+    }
 
-      MarkovChain chain = GenerateMarkovChain();
+    private static MarkovChain InitializeMarkovChain()
+    {
+      Console.WriteLine("Creating a Markov chain..");
 
+      IReader reader = new FileReader();
+      var strings = reader.Read("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\TextFiles\\beeMovieScript.txt");
+      return new MarkovChain(strings);
+    }
+
+    private static void RunApplication(MarkovChain chain)
+    {
       bool doRunApplication = true;
-
       do
       {
         GenerateText(chain);
         doRunApplication = promptForRerun();
 
       } while (doRunApplication);
-
-
-    }
-
-    private static MarkovChain GenerateMarkovChain()
-    {
-      var reader = new FileReader();
-      var strings = reader.Read("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\TextFiles\\beeMovieScript.txt");
-
-      // Generate chain
-      var chain = new MarkovChain(strings);
-      return chain;
-
     }
 
     private static void GenerateText(MarkovChain chain)
@@ -56,7 +48,7 @@ namespace MarkovChainApp
       bool respondedWith = false;
       do
       {
-        ConsoleKeyInfo keyInfo = Console.ReadKey();
+        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
         if (keyInfo.Key.Equals(ConsoleKey.Spacebar))
         {
           respondedWith = true;
