@@ -11,14 +11,21 @@ namespace MarkovChainApp
       RunApplication(chain);
     }
 
+    /// <summary>
+    /// Creates a Markov chain
+    /// </summary>
+    /// <returns>A MArkov chain</returns>
     private static MarkovChain InitializeMarkovChain()
     {
       Console.WriteLine("Creating a Markov chain..");
 
+      // You can select from a reader here, please check information on each reader on /Readers/*.
       IReader reader =
         new CsvFileReader("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\Resources\\TrumpTweets.csv", 1)
         .SetDoDecodeHtml(true)
         .SetOffset(1);
+
+
       var strings = reader.Read();
       return new MarkovChain(strings);
     }

@@ -11,16 +11,19 @@ namespace MarkovChainApp.Readers
   {
     private string filePath;
 
+    /// <summary>
+    /// A reader that can read strings from text files.
+    /// </summary>
+    /// <param name="filePath">The path of the file to read from.</param>
     public TextFileReader(string filePath)
     {
       this.filePath = filePath;
     }
 
     /// <summary>
-    /// Reads strings from a file.
+    /// Reads strings from the filePath supplied.
     /// </summary>
-    /// <param name="arguments">[0]: File path</param>
-    /// <returns></returns>
+    /// <returns>A list of strings from the file.</returns>
     public List<string> Read()
     {
       var returnStrings = new List<string>();

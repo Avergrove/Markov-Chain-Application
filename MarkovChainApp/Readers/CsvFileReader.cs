@@ -14,17 +14,17 @@ namespace MarkovChainApp.Readers
     private bool doDecodeHtml;
 
     /// <summary>
-    /// A file reader that is able to read csv files.
+    /// A file reader that is able to read CSV files.
     /// </summary>
     /// <param name="filePath">The path to the file to read.</param>
     /// <param name="stringColumn">The column in which strings reside in the csv file.</param>
-    public CsvFileReader(String filePath, int stringColumn)
+    public CsvFileReader(String filePath, int stringColumn = 0, int offset = 0, char seperator = ',', bool doDecodeHtml = false)
     {
       this.filePath = filePath;
       this.stringColumn = stringColumn;
-      this.seperator = ',';
-      this.offset = 0;
-      this.doDecodeHtml = false;
+      this.offset = offset;
+      this.seperator = seperator;
+      this.doDecodeHtml = doDecodeHtml;
     }
 
     /// <summary>

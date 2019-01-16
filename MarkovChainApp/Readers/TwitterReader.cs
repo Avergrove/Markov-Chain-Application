@@ -12,7 +12,7 @@ namespace MarkovChainApp.Readers
   internal class TwitterReader: IReader
   {
     List<string> Read(string inputUrl){
-        
+      throw new NotImplementedException();
     }
   }
 }
