@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MarkovChainApp.Readers;
 
@@ -12,19 +13,19 @@ namespace MarkovChainApp
     static void Main(string[] args)
     {
       Console.WriteLine("Welcome to the Markov Chain app!");
-
+      
       // Read
       var reader = new FileReader();
-      var strings = reader.Read("C:\\Users\\**Snip**\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\TextFiles\\beeMovieScript.txt");
+      var strings = reader.Read("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\TextFiles\\beeMovieScript.txt");
 
 
       // Generate chain
       var chain = new MarkovChain(strings);
 
-      // Vomit 
+      // Vomit sentences
       var message = chain.GenerateText();
       Console.WriteLine(message);
-      
+
       Console.WriteLine("Press any key to continue...");
       Console.ReadKey();
 

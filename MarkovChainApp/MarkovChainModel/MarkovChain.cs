@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MarkovChainApp
 {
@@ -11,6 +12,7 @@ namespace MarkovChainApp
     public List<DirectedEdge> Edges { get; set; }
     private static Random rand;
 
+    private int minimumSentenceLength = 15;
 
     public MarkovChain(List<string> inputStrings)
     {
@@ -80,14 +82,64 @@ namespace MarkovChainApp
       string returnText = string.Empty;
       string curr = GetRandomKey();
 
+      /*
       for (int i = 0; i < 100; i++)
       {
         returnText = string.Concat(returnText, curr, " ");
         curr = GetNextToValue(curr);
       }
+      */
+
+
+      bool textGenerated = false;
+      int currentSentenceLength = 0;
+      while(!textGenerated)
+      {
+        returnText = string.Concat(returnText, curr, " ");
+
+        if (currentSentenceLength >= minimumSentenceLength && IsSentenceEnder(curr))
+        {
+          textGenerated = true;
+        }
+
+        curr = GetNextToValue(curr);
+        currentSentenceLength++;
+
+      }
 
       return returnText;
 
+    }
+
+    public MarkovChain SetMinimumGenerateLength(int length)
+    {
+      this.minimumSentenceLength = length;
+      return this;
+    }
+
+    private bool IsSentenceEnder(String s)
+    {
+      Regex endsWithFullStop = new Regex(@".*\.$");
+      if (endsWithFullStop.IsMatch(s))
+      {
+        return true;
+      }
+
+      // Is ender if string ends with question mark (?)
+      Regex endsWithQuestionMark = new Regex(@".*\?$");
+      if(endsWithQuestionMark.IsMatch(s))
+      {
+        return true;
+      }
+
+      // Is ender if string ends with exclamation mark (!)
+      Regex endsWithExclamationMark = new Regex(@".*!$");
+      if(endsWithExclamationMark.IsMatch(s))
+      {
+        return true;
+      }
+
+      return false;
     }
 
     /// <summary>
