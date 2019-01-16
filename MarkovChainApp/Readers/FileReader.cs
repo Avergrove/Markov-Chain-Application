@@ -7,16 +7,27 @@ using System.Threading.Tasks;
 
 namespace MarkovChainApp.Readers
 {
-  internal class FileReader : IReader
+  class TextFileReader : IReader
   {
-    public List<string> Read(string inputUrl)
-    {
+    private string filePath;
 
+    public TextFileReader(string filePath)
+    {
+      this.filePath = filePath;
+    }
+
+    /// <summary>
+    /// Reads strings from a file.
+    /// </summary>
+    /// <param name="arguments">[0]: File path</param>
+    /// <returns></returns>
+    public List<string> Read()
+    {
       var returnStrings = new List<string>();
 
       try
       {
-        StreamReader sr = new StreamReader(inputUrl);
+        StreamReader sr = new StreamReader(filePath);
         string line;
         while ((line = sr.ReadLine()) != null)
         {
@@ -30,6 +41,12 @@ namespace MarkovChainApp.Readers
       }
 
       return returnStrings;
+    }
+
+    public TextFileReader SetFilePath(String filePath)
+    {
+      this.filePath = filePath;
+      return this;
     }
   }
 }

@@ -15,8 +15,11 @@ namespace MarkovChainApp
     {
       Console.WriteLine("Creating a Markov chain..");
 
-      IReader reader = new FileReader();
-      var strings = reader.Read("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\TextFiles\\beeMovieScript.txt");
+      IReader reader =
+        new CsvFileReader("C:\\Users\\P1319424\\Desktop\\Internship\\repos\\MarkovChainApp\\MarkovChainApp\\Resources\\TrumpTweets.csv", 1)
+        .SetDoDecodeHtml(true)
+        .SetOffset(1);
+      var strings = reader.Read();
       return new MarkovChain(strings);
     }
 
@@ -31,11 +34,13 @@ namespace MarkovChainApp
       } while (doRunApplication);
     }
 
+    /// <summary>
+    /// Prints out text from a markov chain.
+    /// </summary>
+    /// <param name="chain"></param>
     private static void GenerateText(MarkovChain chain)
     {
-
-      // Vomit sentences
-      var message = chain.GenerateText();
+      var message = chain.SetMinimumGenerateLength(5).GenerateText();
       Console.WriteLine(message);
     }
 
