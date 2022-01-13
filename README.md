@@ -5,4 +5,3 @@ A simple application that can generate Markov chains, and can be extended to rea
 # Working with the project
   - Clone a copy of the program
   - Configure the filepaths in Program.cs (Main), and use Readers as you see fit!
-  - Have fun memeing!
